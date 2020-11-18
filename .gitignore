@@ -4,6 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
+target/node_modules/out/build/.idea
 
 # testing
 /coverage
