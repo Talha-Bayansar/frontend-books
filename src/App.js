@@ -4,11 +4,10 @@ import "./App.css";
 function App() {
   const [books, setBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const url = process.env.REACT_APP_URL_SERVER;
   useEffect(() => {
     async function getBooks() {
       setIsLoading(true);
-      const response = await fetch(url);
+      const response = await fetch(process.env.REACT_APP_URL_SERVER);
       const body = await response.json();
       setBooks(body);
       setIsLoading(false);
