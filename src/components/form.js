@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../App.css";
 
 function Form(props) {
@@ -47,6 +47,14 @@ function Form(props) {
     setBooks(body);
   }
 
+  useEffect(() => {
+    if (bookToEdit) {
+      setTitle(bookToEdit.title);
+      setAuthor(bookToEdit.author);
+      setSells(bookToEdit.sells);
+    }
+  }, [bookToEdit]);
+
   return (
     <form className="form" onSubmit={(e) => e.preventDefault()}>
       Title:
@@ -54,21 +62,21 @@ function Form(props) {
         className="form__input"
         type="text"
         onChange={(e) => setTitle(e.target.value)}
-        defaultValue={bookToEdit !== null ? bookToEdit.title : ""}
+        value={title}
       />
       Author:
       <input
         className="form__input"
         type="text"
         onChange={(e) => setAuthor(e.target.value)}
-        defaultValue={bookToEdit !== null ? bookToEdit.author : ""}
+        value={author}
       />
       Sells:
       <input
         className="form__input"
         type="number"
         step={1000}
-        defaultValue={bookToEdit !== null ? bookToEdit.sells : sells}
+        value={sells}
         onChange={(e) => setSells(parseInt(e.target.value))}
       />
       <button
