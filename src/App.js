@@ -17,6 +17,23 @@ function App() {
     getBooks();
   }, []);
 
+  async function deleteBook(book) {
+    const fetchOptions = {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: JSON.stringify(book),
+    };
+
+    const response = await fetch(
+      process.env.REACT_APP_URL_SERVER,
+      fetchOptions
+    );
+    const body = await response.json();
+    setBooks(body);
+  }
+
   return (
     <div className="App">
       {isLoading ? <p>LOADING DATA</p> : false}
@@ -25,9 +42,13 @@ function App() {
           title: {b.title + " - "}
           author: {b.author + " - "}
           sells: {b.sells}
+          <button onClick={() => deleteBook(b)}>Delete</button>
         </p>
       ))}
-      <Form addBook={(body) => setBooks([...books, body])} />
+      <Form
+        setIsLoading={setIsLoading}
+        addBook={(body) => setBooks([...books, body])}
+      />
     </div>
   );
 }

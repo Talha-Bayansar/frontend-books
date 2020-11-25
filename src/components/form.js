@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import "../App.css";
 
 function Form(props) {
-  const { addBook } = props;
+  const { addBook, setIsLoading } = props;
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [sells, setSells] = useState(0);
 
   async function createBook(book) {
+    setIsLoading(true);
     const fetchOptions = {
       method: "POST",
       headers: {
@@ -22,6 +23,7 @@ function Form(props) {
     const body = await response.json();
     console.log(`async createBook: received response ${JSON.stringify(body)}`);
     addBook(body);
+    setIsLoading(false);
   }
 
   return (
