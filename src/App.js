@@ -5,6 +5,7 @@ import Form from "./components/form";
 function App() {
   const [books, setBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [bookToEdit, setBookToEdit] = useState(null);
   useEffect(() => {
     async function getBooks() {
       setIsLoading(true);
@@ -38,7 +39,7 @@ function App() {
     <div className="App">
       {isLoading ? <p>LOADING DATA</p> : false}
       {books.map((b) => (
-        <p key={b.id}>
+        <p className="book" onClick={() => setBookToEdit(b)} key={b.id}>
           title: {b.title + " - "}
           author: {b.author + " - "}
           sells: {b.sells}
@@ -46,6 +47,7 @@ function App() {
         </p>
       ))}
       <Form
+        bookToEdit={bookToEdit}
         setIsLoading={setIsLoading}
         addBook={(body) => setBooks([...books, body])}
       />
