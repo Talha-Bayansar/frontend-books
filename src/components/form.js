@@ -54,21 +54,21 @@ function Form(props) {
         className="form__input"
         type="text"
         onChange={(e) => setTitle(e.target.value)}
-        placeholder={bookToEdit !== null ? bookToEdit.title : ""}
+        defaultValue={bookToEdit !== null ? bookToEdit.title : ""}
       />
       Author:
       <input
         className="form__input"
         type="text"
         onChange={(e) => setAuthor(e.target.value)}
-        placeholder={bookToEdit !== null ? bookToEdit.author : ""}
+        defaultValue={bookToEdit !== null ? bookToEdit.author : ""}
       />
       Sells:
       <input
         className="form__input"
         type="number"
         step={1000}
-        placeholder={bookToEdit !== null ? bookToEdit.sells : sells}
+        defaultValue={bookToEdit !== null ? bookToEdit.sells : sells}
         onChange={(e) => setSells(parseInt(e.target.value))}
       />
       <button
