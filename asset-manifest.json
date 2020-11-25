@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/frontend-books/static/css/main.8c8b27cf.chunk.css",
-    "main.js": "/frontend-books/static/js/main.0dd03ae4.chunk.js",
-    "main.js.map": "/frontend-books/static/js/main.0dd03ae4.chunk.js.map",
+    "main.css": "/frontend-books/static/css/main.93263655.chunk.css",
+    "main.js": "/frontend-books/static/js/main.edfa0303.chunk.js",
+    "main.js.map": "/frontend-books/static/js/main.edfa0303.chunk.js.map",
     "runtime-main.js": "/frontend-books/static/js/runtime-main.b5f7f602.js",
     "runtime-main.js.map": "/frontend-books/static/js/runtime-main.b5f7f602.js.map",
-    "static/js/2.055724b0.chunk.js": "/frontend-books/static/js/2.055724b0.chunk.js",
-    "static/js/2.055724b0.chunk.js.map": "/frontend-books/static/js/2.055724b0.chunk.js.map",
+    "static/js/2.b98360d6.chunk.js": "/frontend-books/static/js/2.b98360d6.chunk.js",
+    "static/js/2.b98360d6.chunk.js.map": "/frontend-books/static/js/2.b98360d6.chunk.js.map",
     "index.html": "/frontend-books/index.html",
-    "static/css/main.8c8b27cf.chunk.css.map": "/frontend-books/static/css/main.8c8b27cf.chunk.css.map",
-    "static/js/2.055724b0.chunk.js.LICENSE.txt": "/frontend-books/static/js/2.055724b0.chunk.js.LICENSE.txt"
+    "static/css/main.93263655.chunk.css.map": "/frontend-books/static/css/main.93263655.chunk.css.map",
+    "static/js/2.b98360d6.chunk.js.LICENSE.txt": "/frontend-books/static/js/2.b98360d6.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.b5f7f602.js",
-    "static/js/2.055724b0.chunk.js",
-    "static/css/main.8c8b27cf.chunk.css",
-    "static/js/main.0dd03ae4.chunk.js"
+    "static/js/2.b98360d6.chunk.js",
+    "static/css/main.93263655.chunk.css",
+    "static/js/main.edfa0303.chunk.js"
   ]
 }
