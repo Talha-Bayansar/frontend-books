@@ -21,9 +21,8 @@ function App() {
       {isLoading ? <p>LOADING DATA</p> : false}
       {books.map((b) => (
         <p key={b.title}>
-          id: {b.id + " "}
-          title: {b.title + " "}
-          author: {b.author + " "}
+          title: {b.title + " - "}
+          author: {b.author + " - "}
           sells: {b.sells}
         </p>
       ))}
