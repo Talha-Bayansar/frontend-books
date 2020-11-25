@@ -39,7 +39,14 @@ function App() {
     <div className="App">
       {isLoading ? <p>LOADING DATA</p> : false}
       {books.map((b) => (
-        <p className="book" onClick={() => setBookToEdit(b)} key={b.id}>
+        <p
+          className="book"
+          onClick={() => setBookToEdit(b)}
+          key={b.id}
+          style={{
+            backgroundColor: `${bookToEdit === b ? "grey" : "transparent"}`,
+          }}
+        >
           title: {b.title + " - "}
           author: {b.author + " - "}
           sells: {b.sells}
