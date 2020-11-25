@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import Form from "./components/form";
 
 function App() {
   const [books, setBooks] = useState([]);
@@ -20,12 +21,13 @@ function App() {
     <div className="App">
       {isLoading ? <p>LOADING DATA</p> : false}
       {books.map((b) => (
-        <p key={b.title}>
+        <p key={b.id}>
           title: {b.title + " - "}
           author: {b.author + " - "}
           sells: {b.sells}
         </p>
       ))}
+      <Form addBook={(body) => setBooks([...books, body])} />
     </div>
   );
 }
