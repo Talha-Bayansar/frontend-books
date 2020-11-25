@@ -50,6 +50,7 @@ function App() {
         bookToEdit={bookToEdit}
         setIsLoading={setIsLoading}
         addBook={(body) => setBooks([...books, body])}
+        setBooks={setBooks}
       />
     </div>
   );
