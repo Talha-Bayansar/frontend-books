@@ -56,7 +56,15 @@ function Form(props) {
       fetchOptions
     );
     const body = await response.json();
-    setBooks(body);
+    console.log(body);
+    if (response.ok) {
+      addBook(body);
+      setMessage("Book added successfully.");
+      console.log("createBook: done");
+      setBooks(body);
+    } else {
+      setMessage(`${body.message}`);
+    }
   }
 
   useEffect(() => {

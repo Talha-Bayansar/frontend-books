@@ -10,9 +10,7 @@ function App() {
   useEffect(() => {
     async function getBooks() {
       setIsLoading(true);
-      const response = await fetch(
-        `${process.env.REACT_APP_URL_SERVER}?titleKeyWord=year`
-      );
+      const response = await fetch(`${process.env.REACT_APP_URL_SERVER}`);
       const body = await response.json();
       setBooks(body);
       setIsLoading(false);
