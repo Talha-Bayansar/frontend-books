@@ -32,7 +32,12 @@ function App() {
       fetchOptions
     );
     const body = await response.json();
-    setBooks(body);
+    if (response.ok) {
+      setMessage("Book deleted successfully.");
+      setBooks(body);
+    } else {
+      setMessage(`${body.message}`);
+    }
   }
 
   return (

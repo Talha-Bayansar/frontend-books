@@ -59,7 +59,7 @@ function Form(props) {
     console.log(body);
     if (response.ok) {
       addBook(body);
-      setMessage("Book added successfully.");
+      setMessage("Book edited successfully.");
       console.log("createBook: done");
       setBooks(body);
     } else {
