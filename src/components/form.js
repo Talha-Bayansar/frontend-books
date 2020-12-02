@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../App.css";
 
 function Form(props) {
-  const { addBook, setIsLoading, bookToEdit, setBooks } = props;
+  const { addBook, setIsLoading, bookToEdit, setBooks, setMessage } = props;
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [sells, setSells] = useState(0);
@@ -26,11 +26,13 @@ function Form(props) {
         `async createBook: received response ${JSON.stringify(body)}`
       );
       addBook(body);
+      setMessage("Book added successfully.");
       console.log("createBook: done");
     } else {
       console.log(
         `async createBook: ERROR: ${response.status} - ${body.error} - ${body.message}`
       );
+      setMessage(`${body.message}`);
     }
 
     setIsLoading(false);

@@ -6,6 +6,7 @@ function App() {
   const [books, setBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [bookToEdit, setBookToEdit] = useState(null);
+  const [message, setMessage] = useState("");
   useEffect(() => {
     async function getBooks() {
       setIsLoading(true);
@@ -39,6 +40,7 @@ function App() {
   return (
     <div className="App">
       {isLoading ? <p>LOADING DATA</p> : false}
+      <span>{message}</span>
       {books.map((b) => (
         <p
           className="book"
@@ -59,6 +61,7 @@ function App() {
         setIsLoading={setIsLoading}
         addBook={(body) => setBooks([...books, body])}
         setBooks={setBooks}
+        setMessage={setMessage}
       />
     </div>
   );
