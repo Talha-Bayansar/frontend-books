@@ -10,9 +10,14 @@ function App() {
   useEffect(() => {
     async function getBooks() {
       setIsLoading(true);
-      const response = await fetch(`${process.env.REACT_APP_URL_SERVER}`);
-      const body = await response.json();
-      setBooks(body);
+      try {
+        const response = await fetch(`${process.env.REACT_APP_URL_SERVER}`);
+        const body = await response.json();
+        setBooks(body);
+      } catch (e) {
+        console.log(e);
+        setMessage("Connection error.");
+      }
       setIsLoading(false);
     }
 
@@ -27,16 +32,21 @@ function App() {
       },
     };
 
-    const response = await fetch(
-      `${process.env.REACT_APP_URL_SERVER}/${book.id}`,
-      fetchOptions
-    );
-    const body = await response.json();
-    if (response.ok) {
-      setMessage("Book deleted successfully.");
-      setBooks(body);
-    } else {
-      setMessage(`${body.message}`);
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_URL_SERVER}/${book.id}`,
+        fetchOptions
+      );
+      const body = await response.json();
+      if (response.ok) {
+        setMessage("Book deleted successfully.");
+        setBooks(body);
+      } else {
+        setMessage(`${body.message}`);
+      }
+    } catch (e) {
+      console.log(e);
+      setMessage("Connection error.");
     }
   }
 

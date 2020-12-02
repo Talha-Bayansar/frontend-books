@@ -16,23 +16,28 @@ function Form(props) {
       },
       body: JSON.stringify(book),
     };
-    const response = await fetch(
-      process.env.REACT_APP_URL_SERVER,
-      fetchOptions
-    );
-    const body = await response.json();
-    if (response.ok) {
-      console.log(
-        `async createBook: received response ${JSON.stringify(body)}`
+    try {
+      const response = await fetch(
+        process.env.REACT_APP_URL_SERVER,
+        fetchOptions
       );
-      addBook(body);
-      setMessage("Book added successfully.");
-      console.log("createBook: done");
-    } else {
-      console.log(
-        `async createBook: ERROR: ${response.status} - ${body.error} - ${body.message}`
-      );
-      setMessage(`${body.message}`);
+      const body = await response.json();
+      if (response.ok) {
+        console.log(
+          `async createBook: received response ${JSON.stringify(body)}`
+        );
+        addBook(body);
+        setMessage("Book added successfully.");
+        console.log("createBook: done");
+      } else {
+        console.log(
+          `async createBook: ERROR: ${response.status} - ${body.error} - ${body.message}`
+        );
+        setMessage(`${body.message}`);
+      }
+    } catch (e) {
+      console.log(e);
+      setMessage("Connection error.");
     }
 
     setIsLoading(false);
@@ -51,19 +56,24 @@ function Form(props) {
       body: JSON.stringify(book),
     };
 
-    const response = await fetch(
-      `${process.env.REACT_APP_URL_SERVER}/${book.id}`,
-      fetchOptions
-    );
-    const body = await response.json();
-    console.log(body);
-    if (response.ok) {
-      addBook(body);
-      setMessage("Book edited successfully.");
-      console.log("createBook: done");
-      setBooks(body);
-    } else {
-      setMessage(`${body.message}`);
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_URL_SERVER}/${book.id}`,
+        fetchOptions
+      );
+      const body = await response.json();
+      console.log(body);
+      if (response.ok) {
+        addBook(body);
+        setMessage("Book edited successfully.");
+        console.log("createBook: done");
+        setBooks(body);
+      } else {
+        setMessage(`${body.message}`);
+      }
+    } catch (e) {
+      console.log(e);
+      setMessage("Connection error.");
     }
   }
 
