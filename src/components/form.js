@@ -40,7 +40,7 @@ function Form(props) {
     };
 
     const response = await fetch(
-      process.env.REACT_APP_URL_SERVER,
+      `${process.env.REACT_APP_URL_SERVER}/${book.id}`,
       fetchOptions
     );
     const body = await response.json();
