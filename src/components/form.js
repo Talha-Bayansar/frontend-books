@@ -21,8 +21,18 @@ function Form(props) {
       fetchOptions
     );
     const body = await response.json();
-    console.log(`async createBook: received response ${JSON.stringify(body)}`);
-    addBook(body);
+    if (response.ok) {
+      console.log(
+        `async createBook: received response ${JSON.stringify(body)}`
+      );
+      addBook(body);
+      console.log("createBook: done");
+    } else {
+      console.log(
+        `async createBook: ERROR: ${response.status} - ${body.error} - ${body.message}`
+      );
+    }
+
     setIsLoading(false);
   }
 
