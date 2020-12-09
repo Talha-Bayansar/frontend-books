@@ -33,7 +33,14 @@ function Form(props) {
         console.log(
           `async createBook: ERROR: ${response.status} - ${body.error} - ${body.message}`
         );
-        setMessage(`${body.message}`);
+        const errorMessage =
+          body.errors &&
+          body.errors.reduce(
+            (accumulator, error) =>
+              `${accumulator} ${error.defaultMessage} ---`,
+            "--- "
+          );
+        setMessage(errorMessage || body.message);
       }
     } catch (e) {
       console.log(e);
