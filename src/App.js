@@ -72,7 +72,7 @@ function App() {
       <Form
         bookToEdit={bookToEdit}
         setIsLoading={setIsLoading}
-        addBook={(body) => setBooks(body)}
+        addBook={(body) => setBooks([...books, body])}
         setBooks={setBooks}
         setMessage={setMessage}
       />

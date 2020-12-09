@@ -51,16 +51,21 @@ function Form(props) {
   }
 
   async function editBook(book) {
-    book.title = title;
-    book.author = author;
-    book.price = price;
+    // book.title = title;
+    // book.author = author;
+    // book.price = price;
 
     const fetchOptions = {
       method: "PUT",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
       },
-      body: JSON.stringify(book),
+      body: JSON.stringify({
+        id: book.id,
+        title: title,
+        author: author,
+        price: price,
+      }),
     };
 
     try {
@@ -71,7 +76,6 @@ function Form(props) {
       const body = await response.json();
       console.log(body);
       if (response.ok) {
-        addBook(body);
         setMessage("Book edited successfully.");
         console.log("createBook: done");
         setBooks(body);
