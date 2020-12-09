@@ -5,7 +5,7 @@ function Form(props) {
   const { addBook, setIsLoading, bookToEdit, setBooks, setMessage } = props;
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
-  const [sells, setSells] = useState(0);
+  const [price, setPrice] = useState(0);
 
   async function createBook(book) {
     setIsLoading(true);
@@ -51,9 +51,9 @@ function Form(props) {
   }
 
   async function editBook(book) {
-    bookToEdit.title = title;
-    bookToEdit.author = author;
-    bookToEdit.sells = sells;
+    book.title = title;
+    book.author = author;
+    book.price = price;
 
     const fetchOptions = {
       method: "PUT",
@@ -76,7 +76,14 @@ function Form(props) {
         console.log("createBook: done");
         setBooks(body);
       } else {
-        setMessage(`${body.message}`);
+        const errorMessage =
+          body.errors &&
+          body.errors.reduce(
+            (accumulator, error) =>
+              `${accumulator} ${error.defaultMessage} ---`,
+            "--- "
+          );
+        setMessage(errorMessage || body.message);
       }
     } catch (e) {
       console.log(e);
@@ -88,7 +95,7 @@ function Form(props) {
     if (bookToEdit) {
       setTitle(bookToEdit.title);
       setAuthor(bookToEdit.author);
-      setSells(bookToEdit.sells);
+      setPrice(bookToEdit.price);
     }
   }, [bookToEdit]);
 
@@ -108,13 +115,13 @@ function Form(props) {
         onChange={(e) => setAuthor(e.target.value)}
         value={author}
       />
-      Sells:
+      Price:
       <input
         className="form__input"
         type="number"
-        step={1000}
-        value={sells}
-        onChange={(e) => setSells(parseInt(e.target.value))}
+        step={5}
+        value={price}
+        onChange={(e) => setPrice(parseInt(e.target.value))}
       />
       <button
         className="form__button"
@@ -122,7 +129,7 @@ function Form(props) {
           createBook({
             title: title,
             author: author,
-            sells: sells,
+            price: price,
           })
         }
       >

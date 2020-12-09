@@ -65,14 +65,14 @@ function App() {
         >
           title: {b.title + " - "}
           author: {b.author + " - "}
-          sells: {b.sells}
+          price: {b.price}
           <button onClick={() => deleteBook(b)}>Delete</button>
         </p>
       ))}
       <Form
         bookToEdit={bookToEdit}
         setIsLoading={setIsLoading}
-        addBook={(body) => setBooks([...books, body])}
+        addBook={(body) => setBooks(body)}
         setBooks={setBooks}
         setMessage={setMessage}
       />
