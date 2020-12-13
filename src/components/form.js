@@ -104,13 +104,19 @@ function Form(props) {
   }, [bookToEdit]);
 
   return (
-    <form className="form" onSubmit={(e) => e.preventDefault()}>
+    <form
+      className="form"
+      onSubmit={(e) => {
+        e.preventDefault();
+      }}
+    >
       Title:
       <input
         className="form__input"
         type="text"
         onChange={(e) => setTitle(e.target.value)}
         value={title}
+        pattern="(.|\s)*\S(.|\s)*"
       />
       Author:
       <input
@@ -118,12 +124,14 @@ function Form(props) {
         type="text"
         onChange={(e) => setAuthor(e.target.value)}
         value={author}
+        pattern="^[a-zA-Z]+$"
       />
       Price:
       <input
         className="form__input"
         type="number"
-        step={5}
+        min={0}
+        max={2000}
         value={priceInEuro}
         onChange={(e) => setPriceInEuro(parseInt(e.target.value))}
       />
