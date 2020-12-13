@@ -5,7 +5,7 @@ function Form(props) {
   const { addBook, setIsLoading, bookToEdit, setBooks, setMessage } = props;
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
-  const [price, setPrice] = useState(0);
+  const [priceInEuro, setPriceInEuro] = useState(0);
 
   async function createBook(book) {
     setIsLoading(true);
@@ -53,7 +53,7 @@ function Form(props) {
   async function editBook(book) {
     // book.title = title;
     // book.author = author;
-    // book.price = price;
+    // book.priceInEuro = priceInEuro;
 
     const fetchOptions = {
       method: "PUT",
@@ -64,7 +64,7 @@ function Form(props) {
         id: book.id,
         title: title,
         author: author,
-        price: price,
+        priceInEuro: priceInEuro,
       }),
     };
 
@@ -99,7 +99,7 @@ function Form(props) {
     if (bookToEdit) {
       setTitle(bookToEdit.title);
       setAuthor(bookToEdit.author);
-      setPrice(bookToEdit.price);
+      setPriceInEuro(bookToEdit.priceInEuro);
     }
   }, [bookToEdit]);
 
@@ -124,8 +124,8 @@ function Form(props) {
         className="form__input"
         type="number"
         step={5}
-        value={price}
-        onChange={(e) => setPrice(parseInt(e.target.value))}
+        value={priceInEuro}
+        onChange={(e) => setPriceInEuro(parseInt(e.target.value))}
       />
       <button
         className="form__button"
@@ -133,7 +133,7 @@ function Form(props) {
           createBook({
             title: title,
             author: author,
-            price: price,
+            priceInEuro: priceInEuro,
           })
         }
       >

@@ -65,7 +65,7 @@ function App() {
         >
           title: {b.title + " - "}
           author: {b.author + " - "}
-          price: {b.price}
+          price: {b.priceInEuro}
           <button onClick={() => deleteBook(b)}>Delete</button>
         </p>
       ))}
