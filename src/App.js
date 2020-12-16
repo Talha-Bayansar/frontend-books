@@ -11,7 +11,18 @@ function App() {
     async function getBooks() {
       setIsLoading(true);
       try {
-        const response = await fetch(`${process.env.REACT_APP_URL_SERVER}`);
+        const fetchOptions = {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json;charset=utf-8",
+            authorization: "Basic " + window.btoa("talha:talha"),
+          },
+        };
+        const response = await fetch(
+          `${process.env.REACT_APP_URL_SERVER}`,
+          fetchOptions
+        );
         const body = await response.json();
         setBooks(body);
       } catch (e) {
