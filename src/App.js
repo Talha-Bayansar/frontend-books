@@ -7,6 +7,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [bookToEdit, setBookToEdit] = useState(null);
   const [message, setMessage] = useState("");
+  const [userName, setUserName] = useState(null);
 
   async function getBooks() {
     setIsLoading(true);
@@ -16,11 +17,10 @@ function App() {
         credentials: "include",
         headers: {
           "Content-Type": "application/json;charset=utf-8",
-          authorization: "Basic " + window.btoa("talha:talha"),
         },
       };
       const response = await fetch(
-        `${process.env.REACT_APP_URL_SERVER}`,
+        `${process.env.REACT_APP_URL_SERVER}/books`,
         fetchOptions
       );
       const body = await response.json();
@@ -32,8 +32,53 @@ function App() {
     setIsLoading(false);
   }
 
+  async function authenticate(usernameForm, passwordForm) {
+    const fetchOptions = {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+        authorization: "Basic " + window.btoa("talha:talha"),
+      },
+    };
+    const response = await fetch(
+      `${process.env.REACT_APP_URL_SERVER}/authenticate`,
+      fetchOptions
+    );
+
+    const body = await response.json();
+    setUserName(body.username);
+  }
+
+  function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(";");
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) === " ") {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) === 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+
+  async function fetchWithCsrf(url, options) {
+    const fetchOptions = {
+      ...options,
+      headers: {
+        "X-XSRF-TOKEN": `${getCookie("XSRF-TOKEN")}`,
+      },
+    };
+
+    return await fetch(url, fetchOptions);
+  }
+
   useEffect(() => {
-    getBooks();
+    authenticate();
   }, []);
 
   async function deleteBook(book) {
@@ -45,8 +90,8 @@ function App() {
     };
 
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_URL_SERVER}/${book.id}`,
+      const response = await fetchWithCsrf(
+        `${process.env.REACT_APP_URL_SERVER}/books/${book.id}`,
         fetchOptions
       );
       const body = await response.json();
@@ -66,6 +111,7 @@ function App() {
     <div className="App">
       <button onClick={() => getBooks()}>Refresh</button>
       {isLoading ? <p>LOADING DATA</p> : false}
+      {userName && <span>logged in as {userName}</span>}
       <span>{message}</span>
       {books.map((b) => (
         <p
