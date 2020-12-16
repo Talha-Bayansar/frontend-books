@@ -7,31 +7,32 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [bookToEdit, setBookToEdit] = useState(null);
   const [message, setMessage] = useState("");
-  useEffect(() => {
-    async function getBooks() {
-      setIsLoading(true);
-      try {
-        const fetchOptions = {
-          method: "GET",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json;charset=utf-8",
-            authorization: "Basic " + window.btoa("talha:talha"),
-          },
-        };
-        const response = await fetch(
-          `${process.env.REACT_APP_URL_SERVER}`,
-          fetchOptions
-        );
-        const body = await response.json();
-        setBooks(body);
-      } catch (e) {
-        console.log(e);
-        setMessage("Connection error.");
-      }
-      setIsLoading(false);
-    }
 
+  async function getBooks() {
+    setIsLoading(true);
+    try {
+      const fetchOptions = {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+          authorization: "Basic " + window.btoa("talha:talha"),
+        },
+      };
+      const response = await fetch(
+        `${process.env.REACT_APP_URL_SERVER}`,
+        fetchOptions
+      );
+      const body = await response.json();
+      setBooks(body);
+    } catch (e) {
+      console.log(e);
+      setMessage("Connection error.");
+    }
+    setIsLoading(false);
+  }
+
+  useEffect(() => {
     getBooks();
   }, []);
 
@@ -63,6 +64,7 @@ function App() {
 
   return (
     <div className="App">
+      <button onClick={() => getBooks()}>Refresh</button>
       {isLoading ? <p>LOADING DATA</p> : false}
       <span>{message}</span>
       {books.map((b) => (

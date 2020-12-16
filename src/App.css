@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 }
 
 .form {
@@ -16,4 +17,11 @@
 
 .book {
   cursor: pointer;
+}
+
+.App > button {
+  display: block;
+  position: absolute;
+  left: 10px;
+  top: 10px;
 }
