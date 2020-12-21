@@ -2,7 +2,14 @@ import React, { useEffect, useState } from "react";
 import "../App.css";
 
 function Form(props) {
-  const { addBook, setIsLoading, bookToEdit, setBooks, setMessage } = props;
+  const {
+    addBook,
+    setIsLoading,
+    bookToEdit,
+    setBooks,
+    setMessage,
+    fetchWithCsrf,
+  } = props;
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [priceInEuro, setPriceInEuro] = useState(0);
@@ -11,13 +18,10 @@ function Form(props) {
     setIsLoading(true);
     const fetchOptions = {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
       body: JSON.stringify(book),
     };
     try {
-      const response = await fetch(
+      const response = await fetchWithCsrf(
         `${process.env.REACT_APP_URL_SERVER}/books`,
         fetchOptions
       );
@@ -57,9 +61,6 @@ function Form(props) {
 
     const fetchOptions = {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
       body: JSON.stringify({
         id: book.id,
         title: title,
@@ -69,7 +70,7 @@ function Form(props) {
     };
 
     try {
-      const response = await fetch(
+      const response = await fetchWithCsrf(
         `${process.env.REACT_APP_URL_SERVER}/books/${book.id}`,
         fetchOptions
       );
@@ -124,7 +125,7 @@ function Form(props) {
         type="text"
         onChange={(e) => setAuthor(e.target.value)}
         value={author}
-        pattern="^[a-zA-Z]+$"
+        pattern="(.|\s)*\S(.|\s)*"
       />
       Price:
       <input

@@ -68,12 +68,14 @@ function App() {
 
   async function fetchWithCsrf(url, options) {
     const fetchOptions = {
-      ...options,
+      method: options.method,
+      credentials: "include",
       headers: {
+        "Content-Type": "application/json;charset=utf-8",
         "X-XSRF-TOKEN": `${getCookie("XSRF-TOKEN")}`,
       },
+      body: options.body,
     };
-
     return await fetch(url, fetchOptions);
   }
 
@@ -81,12 +83,13 @@ function App() {
     authenticate();
   }, []);
 
+  useEffect(() => {
+    getBooks();
+  }, [userName]);
+
   async function deleteBook(book) {
     const fetchOptions = {
       method: "DELETE",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
     };
 
     try {
@@ -134,6 +137,7 @@ function App() {
         addBook={(body) => setBooks([...books, body])}
         setBooks={setBooks}
         setMessage={setMessage}
+        fetchWithCsrf={fetchWithCsrf}
       />
     </div>
   );
