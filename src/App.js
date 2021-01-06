@@ -8,7 +8,9 @@ function App() {
     const [isLoading, setIsLoading] = useState(false);
     const [bookToEdit, setBookToEdit] = useState(null);
     const [message, setMessage] = useState("");
-    const [userName, setUserName] = useState(null);
+    const [userName, setUserName] = useState(() =>
+        localStorage.getItem("user")
+    );
 
     async function getBooks() {
         setIsLoading(true);
@@ -30,21 +32,35 @@ function App() {
     }
 
     async function authenticate(usernameForm, passwordForm) {
+        console.log(`username: ${usernameForm}\npassword: ${passwordForm}`);
         const fetchOptions = {
             method: "GET",
             credentials: "include",
             headers: {
                 "Content-Type": "application/json;charset=utf-8",
-                authorization: "Basic " + window.btoa("talha:talha"),
+                authorization:
+                    "Basic " + window.btoa(`${usernameForm}:${passwordForm}`),
+                "X-Requested-With": "XMLHttpRequest",
             },
         };
-        const response = await fetch(
-            `${process.env.REACT_APP_URL_SERVER}/authenticate`,
-            fetchOptions
-        );
-
-        const body = await response.json();
-        setUserName(body.username);
+        try {
+            const response = await fetch(
+                `${process.env.REACT_APP_URL_SERVER}/authenticate`,
+                fetchOptions
+            );
+            if (response.ok) {
+                console.log(body);
+                const body = await response.json();
+                localStorage.setItem("user", body.username);
+                setUserName(body.username);
+            } else {
+                setMessage("Failed to login");
+                console.log(response);
+            }
+        } catch (e) {
+            setMessage("Failed to Login");
+            console.log("catch error");
+        }
     }
 
     function getCookie(cname) {
@@ -69,6 +85,7 @@ function App() {
             credentials: "include",
             headers: {
                 "Content-Type": "application/json;charset=utf-8",
+                "X-Requested-With": "XMLHttpRequest",
                 "X-XSRF-TOKEN": `${getCookie("XSRF-TOKEN")}`,
             },
             body: options.body,
@@ -76,13 +93,20 @@ function App() {
         return await fetch(url, fetchOptions);
     }
 
-    useEffect(() => {
-        authenticate();
-    }, []);
+    async function logout() {
+        const fetchOptions = {
+            method: "POST",
+        };
+        const response = await fetchWithCsrf(
+            `${process.env.REACT_APP_URL_SERVER}/logout`,
+            fetchOptions
+        );
+        setUserName(null);
+        localStorage.clear();
+        console.log(response);
+    }
 
     useEffect(() => {
-        console.log(userName);
-        console.log(books);
         getBooks();
     }, [userName]);
 
@@ -114,9 +138,14 @@ function App() {
             {userName ? (
                 <div className=".book__form">
                     <button onClick={() => getBooks()}>Refresh</button>
-                    <button className="logout">Logout</button>
+                    <button className="logout" onClick={logout}>
+                        Logout
+                    </button>
+                    <br />
                     {isLoading ? <p>LOADING DATA</p> : false}
+                    <br />
                     {userName && <span>logged in as {userName}</span>}
+                    <br />
                     <span>{message}</span>
                     {books.map((b) => (
                         <p
@@ -147,7 +176,7 @@ function App() {
                     />
                 </div>
             ) : (
-                <Login />
+                <Login authenticate={authenticate} />
             )}
         </div>
     );
