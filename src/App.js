@@ -11,6 +11,7 @@ function App() {
     const [userName, setUserName] = useState(() =>
         localStorage.getItem("user")
     );
+    const [csrfToken, setCsrfToken] = useState();
 
     async function getBooks() {
         setIsLoading(true);
@@ -22,6 +23,7 @@ function App() {
                 `${process.env.REACT_APP_URL_SERVER}/books`,
                 fetchOptions
             );
+            console.log(response);
             if (response.ok) {
                 const body = await response.json();
                 setBooks(body);
@@ -50,6 +52,8 @@ function App() {
             `${process.env.REACT_APP_URL_SERVER}/authenticate`,
             fetchOptions
         );
+        console.log(response);
+        setCsrfToken(response.headers.get("X-XSRF-TOKEN") || csrfToken);
         if (response.ok) {
             const body = await response.json();
             console.log(body);
@@ -60,6 +64,10 @@ function App() {
             console.log(response);
         }
     }
+
+    useEffect(() => {
+        console.log(csrfToken);
+    }, [csrfToken]);
 
     function getCookie(cname) {
         var name = cname + "=";
@@ -81,11 +89,17 @@ function App() {
         const fetchOptions = {
             method: options.method,
             credentials: "include",
-            headers: {
-                "Content-Type": "application/json;charset=utf-8",
-                "X-Requested-With": "XMLHttpRequest",
-                "X-XSRF-TOKEN": `${getCookie("XSRF-TOKEN")}`,
-            },
+
+            headers: csrfToken
+                ? {
+                      "Content-Type": "application/json;charset=utf-8",
+                      "X-Requested-With": "XMLHttpRequest",
+                      "X-XSRF-TOKEN": csrfToken,
+                  }
+                : {
+                      "Content-Type": "application/json;charset=utf-8",
+                      "X-Requested-With": "XMLHttpRequest",
+                  },
             body: options.body,
         };
         return await fetch(url, fetchOptions);
