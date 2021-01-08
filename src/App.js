@@ -22,8 +22,10 @@ function App() {
                 `${process.env.REACT_APP_URL_SERVER}/books`,
                 fetchOptions
             );
-            const body = await response.json();
-            setBooks(body);
+            if (response.ok) {
+                const body = await response.json();
+                setBooks(body);
+            }
         } catch (e) {
             console.log(e);
             setMessage("Connection error.");
@@ -38,28 +40,24 @@ function App() {
             credentials: "include",
             headers: {
                 "Content-Type": "application/json;charset=utf-8",
+                "X-Requested-With": "XMLHttpRequest",
                 authorization:
                     "Basic " + window.btoa(`${usernameForm}:${passwordForm}`),
-                "X-Requested-With": "XMLHttpRequest",
             },
         };
-        try {
-            const response = await fetch(
-                `${process.env.REACT_APP_URL_SERVER}/authenticate`,
-                fetchOptions
-            );
-            if (response.ok) {
-                console.log(body);
-                const body = await response.json();
-                localStorage.setItem("user", body.username);
-                setUserName(body.username);
-            } else {
-                setMessage("Failed to login");
-                console.log(response);
-            }
-        } catch (e) {
-            setMessage("Failed to Login");
-            console.log("catch error");
+
+        const response = await fetch(
+            `${process.env.REACT_APP_URL_SERVER}/authenticate`,
+            fetchOptions
+        );
+        if (response.ok) {
+            const body = await response.json();
+            console.log(body);
+            localStorage.setItem("user", body.username);
+            setUserName(body.username);
+        } else {
+            setMessage("Failed to login");
+            console.log(response);
         }
     }
 
@@ -107,7 +105,9 @@ function App() {
     }
 
     useEffect(() => {
-        getBooks();
+        if (userName !== null) {
+            getBooks();
+        }
     }, [userName]);
 
     async function deleteBook(book) {
