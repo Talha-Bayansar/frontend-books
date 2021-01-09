@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/frontend-books/static/css/main.469b105a.chunk.css",
-    "main.js": "/frontend-books/static/js/main.8bfff7d1.chunk.js",
-    "main.js.map": "/frontend-books/static/js/main.8bfff7d1.chunk.js.map",
+    "main.css": "/frontend-books/static/css/main.ec3fca5c.chunk.css",
+    "main.js": "/frontend-books/static/js/main.d0479a39.chunk.js",
+    "main.js.map": "/frontend-books/static/js/main.d0479a39.chunk.js.map",
     "runtime-main.js": "/frontend-books/static/js/runtime-main.b5f7f602.js",
     "runtime-main.js.map": "/frontend-books/static/js/runtime-main.b5f7f602.js.map",
     "static/js/2.b98360d6.chunk.js": "/frontend-books/static/js/2.b98360d6.chunk.js",
     "static/js/2.b98360d6.chunk.js.map": "/frontend-books/static/js/2.b98360d6.chunk.js.map",
     "index.html": "/frontend-books/index.html",
-    "static/css/main.469b105a.chunk.css.map": "/frontend-books/static/css/main.469b105a.chunk.css.map",
+    "static/css/main.ec3fca5c.chunk.css.map": "/frontend-books/static/css/main.ec3fca5c.chunk.css.map",
     "static/js/2.b98360d6.chunk.js.LICENSE.txt": "/frontend-books/static/js/2.b98360d6.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.b5f7f602.js",
     "static/js/2.b98360d6.chunk.js",
-    "static/css/main.469b105a.chunk.css",
-    "static/js/main.8bfff7d1.chunk.js"
+    "static/css/main.ec3fca5c.chunk.css",
+    "static/js/main.d0479a39.chunk.js"
   ]
 }
