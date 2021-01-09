@@ -11,7 +11,9 @@ function App() {
     const [userName, setUserName] = useState(() =>
         localStorage.getItem("user")
     );
-    const [csrfToken, setCsrfToken] = useState();
+    const [csrfToken, setCsrfToken] = useState(() =>
+        localStorage.getItem("csrfToken")
+    );
 
     async function getBooks() {
         setIsLoading(true);
@@ -52,7 +54,8 @@ function App() {
             `${process.env.REACT_APP_URL_SERVER}/authenticate`,
             fetchOptions
         );
-        console.log(response);
+        console.log(response.headers.get("X-XSRF-TOKEN"));
+        localStorage.setItem("csrfToken", response.headers.get("X-XSRF-TOKEN"));
         setCsrfToken(response.headers.get("X-XSRF-TOKEN") || csrfToken);
         if (response.ok) {
             const body = await response.json();
